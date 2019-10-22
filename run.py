@@ -2,8 +2,11 @@
 
 from random import randint
 
-def play():
-  
+def play(p_score, c_score):
+    
+    print('Welcome to Rock, Paper, Scissors!')
+    print('The score is player: {score1}, computer: {score2}'
+    .format(score1=p_score, score2=c_score))
     player = input('rock (r), paper (p) or scissors (s)?')
 
     if player == 'r':
@@ -39,26 +42,35 @@ def play():
       
     elif player == 'r' and computer == 's':
       print('Player wins!')
+      p_score = p_score + 1
       
     elif player == 'r' and computer == 'p':
       print('Computer wins!')
+      c_score = c_score + 1
       
     elif player == 'p' and computer == 'r':
       print('Player wins!')
+      p_score = p_score + 1
       
     elif player == 'p' and computer == 's':
       print('Computer wins!')
+      c_score = c_score + 1
 
     elif player == 's' and computer == 'p':
       print('Player wins!')
+      p_score = p_score + 1
       
     elif player == "s" and computer == 'r':
       print('Computer wins!')
+      c_score = c_score + 1
 
     else:
       print('Huh?')
     
+    keep_playing = input('Would you like to play again? y/n')
+    if keep_playing == 'y':
+        play(p_score, c_score)
+    else:
+        print('Thanks for playing')
 
-    play()
-
-play()
+play(0)
