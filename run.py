@@ -5,8 +5,8 @@ from random import randint
 def play(p_score, c_score):
     
     print('Welcome to Rock, Paper, Scissors!')
-    print('The score is player: {score1}, computer: {score2}'
-    .format(score1=p_score, score2=c_score))
+    print('The score is player: {}, computer: {}'
+    .format(p_score, c_score))
     player = input('rock (r), paper (p) or scissors (s)?')
 
     if player == 'r':
@@ -71,6 +71,13 @@ def play(p_score, c_score):
     if keep_playing == 'y':
         play(p_score, c_score)
     else:
+        if p_score > c_score:
+            print('Player wins with a final score of {}'.format(p_score))
+        elif p_score < c_score:
+            print('Computer wins with a final score of {}'.format(c_score))
+        else:
+            print("No winner, it's a draw!")
         print('Thanks for playing')
 
-play(0)
+play(0,0)
+
