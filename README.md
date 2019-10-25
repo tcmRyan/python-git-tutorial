@@ -216,6 +216,8 @@ if __name__ == "__main__":
 ### Step 3: Merge refactored code
 Follow steps 11 and 12 in part one to merge your refactored code into the repository
 
+### This ends Part 2
+
 # Part 3: Allow the game to keep playing and add in a score
 ### Step 1: Change the function signature and add intro text with string formatting
 Python has 2 ways to pass parameters to a function: arguments and keyword arguments commonly refered to as args and kwargs. Args are required to be in the same position everytime.  Keyword arguments must follow arguments but can be in any order.
@@ -268,6 +270,7 @@ We now need to keep score for when the player or the computer wins.
       print('Computer wins!')
       c_score = c_score + 1
 ```
+### This ends Part 3
 
 # Part 4: Final score and challenges
 
