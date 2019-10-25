@@ -83,6 +83,9 @@ print('vs', end=' ')
 ```
 
 ### Step 8: Have the computer pick
+We are going to import a standard Python library.  Importing libraries let's you build on code that has already been written.  You can use the standard library or install a library to use through the package manager, pip.
+
+Imports should always got at the top of the file.  Below import the randint function from the random library and add the code for the computer to pick below your player code.
 ```
 from random import randint
 ...
@@ -101,6 +104,7 @@ else:
   print('>8')
 ```
 ### Step 9: Determine the winner
+After the computer is going to pick a random number to determine which choice it makes.  When then have to map it to a letter so that we can compare against the player.
 ```
 chosen = randint(1,3)
 
@@ -115,6 +119,33 @@ elif chosen == 2 :
 else:
   computer = 's'
   print('>8')
+```
+
+Then we compare to the players choice:
+```
+if player == computer:
+  print('DRAW!')
+  
+elif player == 'r' and computer == 's':
+  print('Player wins!')
+  
+elif player == 'r' and computer == 'p':
+  print('Computer wins!')
+  
+elif player == 'p' and computer == 'r':
+  print('Player wins!')
+  
+elif player == 'p' and computer == 's':
+  print('Computer wins!')
+
+elif player == 's' and computer == 'p':
+  print('Player wins!')
+  
+elif player == "s" and computer == 'r':
+  print('Computer wins!')
+
+else:
+  print('Huh?')
 ```
 
 ### Step 10: Test it out
@@ -189,6 +220,8 @@ Follow steps 11 and 12 in part one to merge your refactored code into the reposi
 ### Step 1: Change the function signature and add intro text with string formatting
 Python has 2 ways to pass parameters to a function: arguments and keyword arguments commonly refered to as args and kwargs. Args are required to be in the same position everytime.  Keyword arguments must follow arguments but can be in any order.
 
+Create a new branch for Part 3 and make the following changes:
+
 ```
 def play_game(p_score, c_score=0):
 
@@ -209,6 +242,7 @@ if __name__ == "__main__":
 ```
 
 ### Step 3: Keeping Score
+We now need to keep score for when the player or the computer wins.
 ```
     elif player == 'r' and computer == 's':
       print('Player wins!')
@@ -248,5 +282,10 @@ if __name__ == "__main__":
         else:
             print("No winner, it's a draw!")
 ```
+
+Create a handicap for the player or the computer.
+Create a best out of 5 game.
+Allow the user to change the game to be best out of X.
+
 
 
