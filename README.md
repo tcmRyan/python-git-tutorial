@@ -1,6 +1,7 @@
 # python-git-tutorial
 Tutorial for MAHacks Oct 2019
-[Overview and install links](https://docs.google.com/presentation/d/1kLBJrPnda60LVr4xGxwBy48-9kqfw45B4FUeOf_OBbQ/edit#slide=id.g6443430e76_0_16)
+
+[Overview and install links](https://docs.google.com/presentation/d/1kLBJrPnda60LVr4xGxwBy48-9kqfw45B4FUeOf_OBbQ/edit#slide=id.p)
 
 # Python Git Tutorial
 
