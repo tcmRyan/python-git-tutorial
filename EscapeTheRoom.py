@@ -638,6 +638,5 @@ class MyClient(discord.Client):
 
 client = MyClient()
 #--------------------------------------------
-#uncomment the following line when you download the file
-#this is done so that the token does not compromised
-# client.run('NjM3NzUwMjY0NjE0MzU0OTgy.XbWbpQ.HhugU9a7t-5lypSiG8Oo85Ea1Cw')
+client.run('token')
+#token removed here to avoid problems with the token being compromised
