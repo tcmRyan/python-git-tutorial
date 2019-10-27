@@ -21,6 +21,7 @@ class MyClient(discord.Client):
        self.discoverdSafe = False
        self.gameOver = 0
        self.almostOver = 0
+       self.checkSmallKey = False
        super().__init__()
        
     
@@ -59,6 +60,7 @@ class MyClient(discord.Client):
             self.aquiredMoney = False
             self.goToDoorToEscape = False
             self.discoverdSafe = False
+            self.checkSmallKey = False
 
         if message.content.startswith('-stop'):
             await message.channel.send('Awe, it\'s a shame you can\'t stay. See you next time!')
@@ -76,7 +78,8 @@ class MyClient(discord.Client):
             self.aquiredMap = False
             self.aquiredMoney = False
             self.goToDoorToEscape = False
-            self.discoverdSafe = False    
+            self.discoverdSafe = False  
+            self.checkSmallKey = False  
 
         if "hi there" in message.content.lower():
             await message.channel.send('hello')
@@ -411,8 +414,11 @@ class MyClient(discord.Client):
             await message.channel.send('You get closer to the box. You notice that it\'s big, is made of goldenrod colored reeds, and *is closed shut with a small lock.*')
             await asyncio.sleep(1)
             await message.channel.send('You feel a wierd cumpulsion to try and open the box')
-            await message.channel.send('Do you want to try and open the box? \n(open) or (lve)')
-            self.stagelevel = 5
+            await message.channel.send('Do you want to try and open the box? \nWill you Open(o) or leave(l)')
+            if self.checkSmallKey == True:
+                self.stagelevel = 5
+            if self.checkSmallKey == False:
+                self.stagelevel = 6
 
         if message.content.startswith('n') and self.stagelevel == 4 and self.isAbandonedHouse == True:
             await message.channel.send('You decide not to investigat the box. You decide to head back')
@@ -435,22 +441,23 @@ class MyClient(discord.Client):
         # breakdown of level 5 path ----------------------------------------------------------
 
         #try and open the box 
-        if message.content.startswith('open') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
+        if message.content.startswith('o') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
             await message.channel.send('You try putting in the key into the small lock on the box...')
             await asyncio.sleep(1)
             self.aquiredMainKey = True
             self.isPasscodePresent = True
+            self.checkSmallKey = True
             await message.channel.send('Success! To box creaks open. Inside is a big key, and a piece of paper with some password on it.')
             await message.channel.send('You reach in and take both. You look at the key... it looks like it\'s good for the door!')
             await message.channel.send('**What could you use the password for?**')
             await message.channel.send('*you should go back now*')
             
-        if message.content.startswith('lve') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
+        if message.content.startswith('l') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
             await message.channel.send('You do not want to investigate.')
             await asyncio.sleep(1)
             await message.channel.send('You should head back now')
 
-        if message.content.startswith('open') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == False:
+        if message.content.startswith('o') and self.stagelevel == 6 and self.isAbandonedHouse == True and self.isSmallKeyPresent == False:
             await message.channel.send('Try as you might, you can\'t get the box to open')
             await message.channel.send('You\'ll need a small key to open the box.')
             await message.channel.send('*you should go back now*.')
