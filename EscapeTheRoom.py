@@ -637,4 +637,7 @@ class MyClient(discord.Client):
 
 
 client = MyClient()
-client.run('NjM3NzUwMjY0NjE0MzU0OTgy.XbWaQw.zqKE73lJDA8eGq_S5VR7Mnb905o')
+#--------------------------------------------
+#uncomment the following line when you download the file
+#this is done so that the token does not compromised
+# client.run('NjM3NzUwMjY0NjE0MzU0OTgy.XbWbpQ.HhugU9a7t-5lypSiG8Oo85Ea1Cw')
