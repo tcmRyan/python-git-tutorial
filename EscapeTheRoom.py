@@ -18,7 +18,7 @@ class MyClient(discord.Client):
        self.aquiredMap = False
        self.aquiredMoney = False
        self.goToDoorToEscape = False
-       self.discoverdSafe = False
+       self.discoveredSafe = False
        self.gameOver = 0
        self.almostOver = 0
        self.checkSmallKey = False
@@ -33,9 +33,9 @@ class MyClient(discord.Client):
 
     #@client.event
     async def on_message(self, message):
-        async def vibe_check():
-            await message.content.send('Vibe Check! Try again next time')
-        async def go_back():
+        '''async def vibe_check():
+            await message.content.send('Vibe Check! Try again next time')'''
+        def go_back():
             self.stagelevel = 0
         if message.content.startswith('-annoyJoey'):
             Joey = [x for x in message.guild.members if x.id == 206035591027097601][0]
@@ -59,7 +59,7 @@ class MyClient(discord.Client):
             self.aquiredMap = False
             self.aquiredMoney = False
             self.goToDoorToEscape = False
-            self.discoverdSafe = False
+            self.discoveredSafe = False
             self.checkSmallKey = False
 
         if message.content.startswith('-stop'):
@@ -67,7 +67,8 @@ class MyClient(discord.Client):
             await client.logout()
 
         if message.content.startswith('-home') & self.stagelevel > 0:
-            await message.channel.send('What game would you like to play? Mad Scientist lab (msl), Abonded house office (aho), or cave(c)?')
+            await message.channel.send('Returning to the home screen...')
+            await asyncio.sleep(1)
             self.stagelevel = 1 
             self.isMadScientist = False
             self.isAbandonedHouse = False
@@ -78,8 +79,10 @@ class MyClient(discord.Client):
             self.aquiredMap = False
             self.aquiredMoney = False
             self.goToDoorToEscape = False
-            self.discoverdSafe = False  
+            self.discoveredSafe = False  
             self.checkSmallKey = False  
+            await message.channel.send('What game would you like to play? Mad Scientist lab (msl), Abonded house office (aho), or cave(c)?')
+            
 
         if "hi there" in message.content.lower():
             await message.channel.send('hello')
@@ -130,8 +133,8 @@ class MyClient(discord.Client):
         if message.content.startswith('-startEscape') and self.stagelevel == 0:
             print(message.author.id)
             await message.channel.send('Welcome to Escape the Room!')
-            await message.channel.send('If you want to exit the game, just type \"exit\"')
-            await message.channel.send('If you want to go to the scenario select, just type \"home\"')
+            await message.channel.send('If you want to exit the game, just type \"-exit\"')
+            await message.channel.send('If you want to go to the scenario select, just type \"-home\"')
             await message.channel.send('If you want to go to the main area, just type \"goBack\"')
             await message.channel.send('If you want help, type in -help')
             await message.channel.send('Choose one of the following scenarios: \n' '-Mad scientist lab (msl) \n' '-Abandoned house office (aho) \n' '-Cave (c)')
@@ -340,8 +343,8 @@ class MyClient(discord.Client):
             await message.channel.send('You do not have any money') 
             await message.channel.send('You are not in position of the key for the lock.')
             await message.channel.send('As much as you want to stay, the vibes of this play are abysmal. You need to get out')
+            await message.channel.send('`When you are ready to leave, type in \"door\"`')
             await message.channel.send('**Would you like to step forward? \nyes(y) or no(n)**')
-            await message.channel.send('When you are ready to leave, type in \"door\"')
             self.stagelevel = 2
             self.isAbandonedHouse = True
         
@@ -441,7 +444,7 @@ class MyClient(discord.Client):
         # breakdown of level 5 path ----------------------------------------------------------
 
         #try and open the box 
-        if message.content.startswith('o') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
+        if message.content.startswith('o') and (self.stagelevel == 6 or self.stagelevel == 5) and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
             await message.channel.send('You try putting in the key into the small lock on the box...')
             await asyncio.sleep(1)
             self.aquiredMainKey = True
@@ -451,13 +454,26 @@ class MyClient(discord.Client):
             await message.channel.send('You reach in and take both. You look at the key... it looks like it\'s good for the door!')
             await message.channel.send('**What could you use the password for?**')
             await message.channel.send('*you should go back now*')
+
+        if message.content.startswith('o') and (self.stagelevel == 6 or self.stagelevel == 5) and self.isAbandonedHouse == True and self.isSmallKeyPresent == True and self.discoveredSafe == True:
+            await message.channel.send('You try putting in the key into the small lock on the box...')
+            await asyncio.sleep(1)
+            self.aquiredMainKey = True
+            self.isPasscodePresent = True
+            self.checkSmallKey = True
+            await message.channel.send('Success! To box creaks open. Inside is a big key, and a piece of paper with some password on it.')
+            await message.channel.send('You reach in and take both. You look at the key... it looks like it\'s good for the door!')
+            await message.channel.send('**This looks like you can use it to open some safe...**')
+            await asyncio.sleep(1)
+            await message.channel.send('travel to the safe by typing in (goto)')
+            self.stagelevel = False
             
         if message.content.startswith('l') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isSmallKeyPresent == True:
             await message.channel.send('You do not want to investigate.')
             await asyncio.sleep(1)
             await message.channel.send('You should head back now')
 
-        if message.content.startswith('o') and self.stagelevel == 6 and self.isAbandonedHouse == True and self.isSmallKeyPresent == False:
+        if message.content.startswith('o') and (self.stagelevel == 6 or self.stagelevel == 5) and self.isAbandonedHouse == True and self.isSmallKeyPresent == False:
             await message.channel.send('Try as you might, you can\'t get the box to open')
             await message.channel.send('You\'ll need a small key to open the box.')
             await message.channel.send('*you should go back now*.')
@@ -489,7 +505,7 @@ class MyClient(discord.Client):
         #try and leave
 
 
-        if message.content.startswith('goto') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.discoverdSafe == True:
+        if message.content.startswith('goto') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.discoveredSafe == True:
             await message.channel.send('You go back to the safe. You hold up the sheet with the pascode to your face')
             await asyncio.sleep(1)
             await message.channel.send('You plug in the code to keypad. You hear a soft ding...')
@@ -512,7 +528,7 @@ class MyClient(discord.Client):
             self.aquiredMap = False
             self.aquiredMoney = False
             self.goToDoorToEscape = False
-            self.discoverdSafe = False   
+            self.discoveredSafe = False   
 
         
         if message.content.startswith('door') and self.isAbandonedHouse == True and self.aquiredMap == True and self.aquiredMoney == False and self.aquiredMainKey == True:
