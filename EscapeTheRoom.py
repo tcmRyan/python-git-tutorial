@@ -1,3 +1,11 @@
+#----------------------------------------------------------------------------------------------------
+# This code was made during MAHacks Hackathon 5, at Rapid7 Downtown, on October 25-26
+# It is a discord bot that simulates an "Escape the room" game.
+# Discord bot information: You have to include the token of your bot where it says 'Token'
+# in client.run('Token'). You cannot put this unique Token on GitHub, due to bot privacy
+# controls on discord. To make the bot run correctly, invite it to your server with all of the correct
+# permissions (make sure it can send_messages and view_channel).
+#----------------------------------------------------------------------------------------------------
 import discord
 import asyncio
 from enum import Enum
@@ -5,6 +13,8 @@ import threading
 
 class MyClient(discord.Client):
     
+    permissions = 522304 # 2112
+
     def __init__(self):
        #this init function is used to initiliaze our global variables
 
@@ -480,8 +490,6 @@ class MyClient(discord.Client):
             await message.channel.send('*you should go back now*.')
             
 
-            
-
 
         #try and open the safe
         if message.content.startswith('y') and self.stagelevel == 5 and self.isAbandonedHouse == True and self.isPasscodePresent == True:
@@ -664,6 +672,5 @@ class MyClient(discord.Client):
 
 client = MyClient()
 #--------------------------------------------
-
 client.run('token')
 #token removed here to avoid problems with the token being compromised
